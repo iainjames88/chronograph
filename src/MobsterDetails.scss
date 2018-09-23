@@ -1,0 +1,8 @@
+@import '~bpk-mixins';
+
+.MobsterDetails {
+  &__li {
+    list-style-type: none;
+    margin: $bpk-spacing-xs 0;
+  }
+}

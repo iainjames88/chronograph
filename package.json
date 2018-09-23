@@ -19,6 +19,9 @@
   "devDependencies": {
     "bpk-component-button": "^2.1.21",
     "bpk-component-code": "^1.1.25",
+    "bpk-component-grid": "^1.1.90",
+    "bpk-component-input": "^3.3.41",
+    "bpk-component-panel": "^1.0.83",
     "bpk-component-text": "^1.0.81",
     "bpk-mixins": "^17.11.16",
     "bpk-stylesheets": "^3.2.128",

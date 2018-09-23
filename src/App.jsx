@@ -1,26 +1,57 @@
-import React from 'react';
-import { BpkCode } from 'bpk-component-code';
-import BpkButton from 'bpk-component-button';
-import BpkText from 'bpk-component-text';
+import React, { Component } from 'react';
+import BpkInput from 'bpk-component-input';
+import MobstersList from './MobstersList';
 
 import STYLES from './App.scss';
 
 const c = className => STYLES[className] || 'UNKNOWN';
 
-const App = () => (
-  <div className={c('App')}>
-    <header className={c('App__header')}>
-      <div className={c('App__header-inner')}>
-        <BpkText tagName="h1" textStyle="xxl" className={c('App__heading')}>Welcome to React + Backpack</BpkText>
-      </div>
-    </header>
-    <main className={c('App__main')}>
-      <BpkText tagName="p" className={c('App__text')}>
-        To get started, edit <BpkCode>src/App.jsx</BpkCode> and save to reload.
-      </BpkText>
-      <BpkButton onClick={() => alert('It works!')}>Click me</BpkButton>
-    </main>
-  </div>
-);
+export default class App extends Component {
+  constructor(props) {
+    super(props);
 
-export default App;
+    this.onChangeMobsterInput = this.onChangeMobsterInput.bind(this);
+    this.onKeyPressMobsterInput = this.onKeyPressMobsterInput.bind(this);
+    this.addMobster = this.addMobster.bind(this);
+
+    this.state = {
+      mobsters: [],
+      mobsterInputValue: '',
+    };
+  }
+
+  onChangeMobsterInput(event) {
+    this.setState({ mobsterInputValue: event.target.value });
+  }
+
+  onKeyPressMobsterInput(event) {
+    if (event.key === 'Enter' && this.state.mobsterInputValue !== '') {
+      this.addMobster(this.state.mobsterInputValue);
+    }
+  }
+
+  addMobster(mobster) {
+    const mobsters = this.state.mobsters;
+    mobsters.push(mobster);
+    this.setState({ mobsters, mobsterInputValue: '' });
+  }
+
+
+  render() {
+    return (
+      <div className={c('App')}>
+        <main className={c('App__main')}>
+          <BpkInput
+            id="MobsterInput"
+            name="MobsterInput"
+            placeholder="Enter a (unique) name and press 'Enter'"
+            value={this.state.mobsterInputValue}
+            onChange={this.onChangeMobsterInput}
+            onKeyPress={this.onKeyPressMobsterInput}
+          />
+          <MobstersList mobsters={this.state.mobsters} />
+        </main>
+      </div>
+    );
+  }
+}
