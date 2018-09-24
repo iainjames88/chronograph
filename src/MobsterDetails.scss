@@ -5,4 +5,18 @@
     margin: $bpk-spacing-xs 0;
     list-style-type: none;
   }
+
+  &__panel {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__mobster {
+    flex-grow: 1;
+  }
+
+  &__removeMobster {
+    flex-grow: 1;
+    text-align: right;
+  }
 }

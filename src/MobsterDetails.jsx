@@ -1,7 +1,6 @@
 import React from 'react';
 import BpkButton from 'bpk-component-button';
 import BpkPanel from 'bpk-component-panel';
-import { BpkGridRow, BpkGridColumn } from 'bpk-component-grid';
 import TrashIconSm from 'bpk-component-icon/sm/trash';
 import { withButtonAlignment } from 'bpk-component-icon';
 
@@ -13,20 +12,16 @@ const AlignedTrashIcon = withButtonAlignment(TrashIconSm);
 export default (props) => {
   return (
     <li className={c('MobsterDetails__li')}>
-      <BpkPanel>
-        <BpkGridRow>
-          <BpkGridColumn width={8}>
-            {props.mobster}
-          </BpkGridColumn>
-          <BpkGridColumn width={4}>
-            <BpkButton
-              onClick={() => props.onClickDeleteMobster(props.mobster)}
-              destructive
-            >
-              <AlignedTrashIcon />
-            </BpkButton>
-          </BpkGridColumn>
-        </BpkGridRow>
+      <BpkPanel className={c('MobsterDetails__panel')}>
+        <span className={c('MobsterDetails__mobster')}>{props.mobster}</span>
+        <span className={c('MobsterDetails__removeMobster')}>
+          <BpkButton
+            onClick={() => props.onClickDeleteMobster(props.mobster)}
+            destructive
+          >
+            <AlignedTrashIcon />
+          </BpkButton>
+        </span>
       </BpkPanel>
     </li>
   );

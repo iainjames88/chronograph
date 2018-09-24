@@ -19,7 +19,7 @@ export default class App extends Component {
     this.onClickDeleteMobster = this.onClickDeleteMobster.bind(this);
 
     this.state = {
-      mobsters: [],
+      mobsters: ['Jack', 'Victor', 'Winston', 'Tam'],
       mobsterInputValue: '',
     };
   }
