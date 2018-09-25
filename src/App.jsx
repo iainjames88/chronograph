@@ -19,12 +19,7 @@ export default class App extends Component {
     this.onClickPromoteToDriver = this.onClickPromoteToDriver.bind(this);
 
     this.state = {
-      mobsters: [
-        { name: 'Jack', isDriver: true },
-        { name: 'Victor', isDriver: false },
-        { name: 'Winston', isDriver: false },
-        { name: 'Tam', isDriver: false },
-      ],
+      mobsters: [],
       mobsterInputValue: '',
     };
   }
@@ -61,8 +56,15 @@ export default class App extends Component {
 
   addMobster(name) {
     const mobsters = [...this.state.mobsters];
-    mobsters.push({ name, isDriver: false });
-    this.setState({ mobsters, mobsterInputValue: '' });
+    const mobstersNames = mobsters.map(m => m.name).join('|');
+    const regexp = new RegExp(`^(${mobstersNames})$`, 'i');
+
+    if (regexp.test(name)) {
+      alert('They are already in the mob!');
+    } else {
+      mobsters.push({ name, isDriver: mobsters.length === 0 });
+      this.setState({ mobsters, mobsterInputValue: '' });
+    }
   }
 
   render() {
