@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import BpkInput from 'bpk-component-input';
-import BpkButton from 'bpk-component-button';
 import { BpkGridContainer, BpkGridRow, BpkGridColumn } from 'bpk-component-grid';
 
 import MobstersList from './MobstersList';
@@ -17,9 +16,15 @@ export default class App extends Component {
     this.onKeyPressMobsterInput = this.onKeyPressMobsterInput.bind(this);
     this.addMobster = this.addMobster.bind(this);
     this.onClickDeleteMobster = this.onClickDeleteMobster.bind(this);
+    this.onClickPromoteToDriver = this.onClickPromoteToDriver.bind(this);
 
     this.state = {
-      mobsters: ['Jack', 'Victor', 'Winston', 'Tam'],
+      mobsters: [
+        { name: 'Jack', isDriver: true },
+        { name: 'Victor', isDriver: false },
+        { name: 'Winston', isDriver: false },
+        { name: 'Tam', isDriver: false },
+      ],
       mobsterInputValue: '',
     };
   }
@@ -34,14 +39,30 @@ export default class App extends Component {
     }
   }
 
-  addMobster(mobster) {
-    const mobsters = this.state.mobsters;
-    mobsters.push(mobster);
-    this.setState({ mobsters: mobsters, mobsterInputValue: '' });
+  onClickDeleteMobster(name) {
+    this.setState({ mobsters: this.state.mobsters.filter(m => m.name !== name) });
   }
 
-  onClickDeleteMobster(mobster) {
-    this.setState({ mobsters: this.state.mobsters.filter(m => m !== mobster) });
+  onClickPromoteToDriver(name) {
+    const mobsters = [...this.state.mobsters];
+    const prevDriver = mobsters.find(m => m.isDriver);
+    const newDriver = mobsters.find(m => m.name === name);
+
+    prevDriver.isDriver = false;
+    newDriver.isDriver = true;
+
+    mobsters.splice(mobsters.indexOf(prevDriver), 1);
+    mobsters.splice(mobsters.indexOf(newDriver), 1);
+    mobsters.splice(0, 0, newDriver);
+    mobsters.push(prevDriver);
+
+    this.setState({ mobsters });
+  }
+
+  addMobster(name) {
+    const mobsters = [...this.state.mobsters];
+    mobsters.push({ name, isDriver: false });
+    this.setState({ mobsters, mobsterInputValue: '' });
   }
 
   render() {
@@ -58,7 +79,11 @@ export default class App extends Component {
                 onChange={this.onChangeMobsterInput}
                 onKeyPress={this.onKeyPressMobsterInput}
               />
-              <MobstersList mobsters={this.state.mobsters} onClickDeleteMobster={this.onClickDeleteMobster} />
+              <MobstersList
+                mobsters={this.state.mobsters}
+                onClickPromoteToDriver={this.onClickPromoteToDriver}
+                onClickDeleteMobster={this.onClickDeleteMobster}
+              />
             </div>
           </BpkGridColumn>
         </BpkGridRow>
