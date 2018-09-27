@@ -1,0 +1,31 @@
+@import '~bpk-mixins';
+
+.Stopwatch {
+  &__container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+
+  &__timerRow {
+    width: 100%;
+  }
+
+  &__buttonsRow {
+    width: 100%;
+  }
+
+  &__h1 {
+    font-size: 10rem;
+    font-weight: normal;
+  }
+
+  &__button {
+    margin-right: $bpk-spacing-xs;
+  }
+
+  &__button:last-child {
+    margin: 0;
+  }
+}

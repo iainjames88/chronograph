@@ -3,10 +3,7 @@ import BpkInput from 'bpk-component-input';
 import { BpkGridContainer, BpkGridRow, BpkGridColumn } from 'bpk-component-grid';
 
 import MobstersList from './MobstersList';
-
-import STYLES from './App.scss';
-
-const c = className => STYLES[className] || 'UNKNOWN';
+import Stopwatch from './Stopwatch';
 
 export default class App extends Component {
   constructor(props) {
@@ -17,9 +14,15 @@ export default class App extends Component {
     this.addMobster = this.addMobster.bind(this);
     this.onClickDeleteMobster = this.onClickDeleteMobster.bind(this);
     this.onClickPromoteToDriver = this.onClickPromoteToDriver.bind(this);
+    this.onTimerExpire = this.onTimerExpire.bind(this);
 
     this.state = {
-      mobsters: [],
+      mobsters: [
+        { name: 'Jack', isDriver: true },
+        { name: 'Victor', isDriver: false },
+        { name: 'Winston', isDriver: false },
+        { name: 'Tam', isDriver: false },
+      ],
       mobsterInputValue: '',
     };
   }
@@ -67,12 +70,18 @@ export default class App extends Component {
     }
   }
 
+  onTimerExpire() {
+    const mobsters = [...this.state.mobsters];
+    mobsters.push({...mobsters.shift(), isDriver: false});
+    mobsters[0].isDriver = true;
+    this.setState({ mobsters });
+  }
+
   render() {
     return (
       <BpkGridContainer>
         <BpkGridRow>
           <BpkGridColumn width={4}>
-            <div className={c('App')}>
               <BpkInput
                 id="MobsterInput"
                 name="MobsterInput"
@@ -86,7 +95,12 @@ export default class App extends Component {
                 onClickPromoteToDriver={this.onClickPromoteToDriver}
                 onClickDeleteMobster={this.onClickDeleteMobster}
               />
-            </div>
+          </BpkGridColumn>
+          <BpkGridColumn width={8}>
+            <Stopwatch
+              minutes={10}
+              onTimerExpire={this.onTimerExpire}
+            />
           </BpkGridColumn>
         </BpkGridRow>
       </BpkGridContainer>
