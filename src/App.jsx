@@ -17,12 +17,7 @@ export default class App extends Component {
     this.onTimerExpire = this.onTimerExpire.bind(this);
 
     this.state = {
-      mobsters: [
-        { name: 'Jack', isDriver: true },
-        { name: 'Victor', isDriver: false },
-        { name: 'Winston', isDriver: false },
-        { name: 'Tam', isDriver: false },
-      ],
+      mobsters: [],
       mobsterInputValue: '',
     };
   }
